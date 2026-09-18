@@ -1,0 +1,46 @@
+/* Rare Friends — type. Three families, compact scale, pixel-aligned display sizes. */
+:root{
+--font-display:'Silkscreen','Courier New',monospace; /* pixel face: sharpest at multiples of 8px */
+--font-body:'Archivo Variable','Archivo',system-ui,-apple-system,sans-serif;
+--font-mono:'Sometype Mono Variable','Sometype Mono',ui-monospace,Menlo,Consolas,monospace;
+/* body / mono scale (compact) */
+--text-2xs:10px;
+--text-xs:11px;
+--text-sm:12px;
+--text-md:13px;
+--text-base:14px;
+--text-lg:16px;
+--text-xl:20px;
+--text-2xl:24px;
+/* display scale — Silkscreen only, multiples of 8 */
+--display-xs:8px;
+--display-sm:16px;
+--display-md:24px;
+--display-lg:32px;
+--display-xl:48px;
+--display-2xl:64px;
+/* leading */
+--leading-display:1; /* @kind font */
+--leading-tight:1.2; /* @kind font */
+--leading-body:1.5; /* @kind font */
+--leading-mono:1.6; /* @kind font */
+/* weight + width */
+--weight-regular:400; /* @kind font */
+--weight-medium:500; /* @kind font */
+--weight-bold:700; /* @kind font */
+--stretch-normal:100%; /* @kind font */
+--stretch-condensed:87.5%; /* @kind font */ /* Archivo wdth axis: dense tables, nav */
+--stretch-wide:112.5%; /* @kind font */
+/* tracking */
+--tracking-display:0; /* @kind font */
+--tracking-label:0.02em; /* @kind font */
+--tracking-tight:-0.01em; /* @kind font */
+/* semantic composites (use via the .rf-* classes in base.css) */
+--type-label:400 var(--text-xs)/var(--leading-tight) var(--font-mono); /* @kind font */
+--type-data:400 var(--text-md)/var(--leading-mono) var(--font-mono); /* @kind font */
+--type-body:400 var(--text-base)/var(--leading-body) var(--font-body); /* @kind font */
+--type-body-sm:400 var(--text-md)/var(--leading-body) var(--font-body); /* @kind font */
+--type-title:400 var(--display-sm)/var(--leading-display) var(--font-display); /* @kind font */
+--type-headline:400 var(--display-lg)/var(--leading-display) var(--font-display); /* @kind font */
+--type-hero:400 var(--display-xl)/var(--leading-display) var(--font-display); /* @kind font */
+}

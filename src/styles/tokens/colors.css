@@ -1,0 +1,97 @@
+/* Rare Friends — 1-bit colour system. Two states (ink / paper), one signal, grays for glyphs only, dithers instead of tints. */
+:root{
+/* base */
+--ink:#111111;
+--paper:#eeeeee;
+--signal:#CCFF00; /* the only chroma: things happening right now (pending, live, waiting for a tap) */
+--signal-backdrop:#000; /* Signal frames remain black in both themes. */
+--ink-60:#666666; /* glyph-only gray: secondary text + icons. Never a fill. */
+--ink-30:#B0B0B0; /* glyph-only gray: disabled text, placeholders. Never a fill. */
+/* dithers — 1-bit "grays" for surfaces (ink pixels on transparent) */
+--dither-12:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M0 0h1v1H0zM2 2h1v1H2z'/%3E%3C/svg%3E"); /* @kind other */
+--dither-25:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M0 0h1v1H0z'/%3E%3C/svg%3E"); /* @kind other */
+--dither-50:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M0 0h1v1H0zM1 1h1v1H1z'/%3E%3C/svg%3E"); /* @kind other */
+--dither-75:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M0 0h2v1H0zM0 1h1v1H0z'/%3E%3C/svg%3E"); /* @kind other */
+--dither-50-paper:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M0 0h1v1H0zM1 1h1v1H1z'/%3E%3C/svg%3E"); /* @kind other */
+/* Binary 64×48 edge fade: 16px of full texture, then 32px thinning to paper. Theme-independent mask. */
+--dither-fade-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='48' shape-rendering='crispEdges'%3E%3Cg fill='white'%3E%3Cpath d='M0 0h64v16H0zM0 16h1v1h-1zM4 16h1v1h-1zM8 16h1v1h-1zM12 16h1v1h-1zM16 16h1v1h-1zM20 16h1v1h-1zM24 16h1v1h-1zM28 16h1v1h-1zM32 16h1v1h-1zM36 16h1v1h-1zM40 16h1v1h-1zM44 16h1v1h-1zM48 16h1v1h-1zM52 16h1v1h-1zM56 16h1v1h-1zM60 16h1v1h-1zM2 18h1v1h-1zM6 18h1v1h-1zM10 18h1v1h-1zM14 18h1v1h-1zM18 18h1v1h-1zM22 18h1v1h-1zM26 18h1v1h-1zM30 18h1v1h-1zM34 18h1v1h-1zM38 18h1v1h-1zM42 18h1v1h-1zM46 18h1v1h-1zM50 18h1v1h-1zM54 18h1v1h-1zM58 18h1v1h-1zM62 18h1v1h-1zM0 20h1v1h-1zM4 20h1v1h-1zM8 20h1v1h-1zM12 20h1v1h-1zM16 20h1v1h-1zM20 20h1v1h-1zM24 20h1v1h-1zM28 20h1v1h-1zM32 20h1v1h-1zM36 20h1v1h-1zM40 20h1v1h-1zM44 20h1v1h-1zM48 20h1v1h-1zM52 20h1v1h-1zM56 20h1v1h-1zM60 20h1v1h-1zM6 22h1v1h-1zM14 22h1v1h-1zM22 22h1v1h-1zM30 22h1v1h-1zM38 22h1v1h-1zM46 22h1v1h-1zM54 22h1v1h-1zM62 22h1v1h-1zM0 24h1v1h-1zM4 24h1v1h-1zM8 24h1v1h-1zM12 24h1v1h-1zM16 24h1v1h-1zM20 24h1v1h-1zM24 24h1v1h-1zM28 24h1v1h-1zM32 24h1v1h-1zM36 24h1v1h-1zM40 24h1v1h-1zM44 24h1v1h-1zM48 24h1v1h-1zM52 24h1v1h-1zM56 24h1v1h-1zM60 24h1v1h-1zM6 26h1v1h-1zM14 26h1v1h-1zM22 26h1v1h-1zM30 26h1v1h-1zM38 26h1v1h-1zM46 26h1v1h-1zM54 26h1v1h-1zM62 26h1v1h-1zM0 28h1v1h-1zM8 28h1v1h-1zM12 28h1v1h-1zM16 28h1v1h-1zM24 28h1v1h-1zM28 28h1v1h-1zM32 28h1v1h-1zM40 28h1v1h-1zM44 28h1v1h-1zM48 28h1v1h-1zM56 28h1v1h-1zM60 28h1v1h-1zM6 30h1v1h-1zM14 30h1v1h-1zM22 30h1v1h-1zM30 30h1v1h-1zM38 30h1v1h-1zM46 30h1v1h-1zM54 30h1v1h-1zM62 30h1v1h-1zM0 32h1v1h-1zM8 32h1v1h-1zM16 32h1v1h-1zM24 32h1v1h-1zM32 32h1v1h-1zM40 32h1v1h-1zM48 32h1v1h-1zM56 32h1v1h-1zM6 34h1v1h-1zM22 34h1v1h-1zM38 34h1v1h-1zM54 34h1v1h-1zM0 36h1v1h-1zM8 36h1v1h-1zM16 36h1v1h-1zM24 36h1v1h-1zM32 36h1v1h-1zM40 36h1v1h-1zM48 36h1v1h-1zM56 36h1v1h-1zM0 40h1v1h-1zM8 40h1v1h-1zM16 40h1v1h-1zM24 40h1v1h-1zM32 40h1v1h-1zM40 40h1v1h-1zM48 40h1v1h-1zM56 40h1v1h-1z'/%3E%3C/g%3E%3C/svg%3E"); /* @kind other */
+/* grids — visible construction lines */
+--grid-dots:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M0 0h1v1H0z'/%3E%3C/svg%3E"); /* @kind other */
+--grid-cross:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M3 0h1v7H3zM0 3h7v1H0z'/%3E%3C/svg%3E"); /* @kind other */
+/* semantic — surfaces */
+--surface-page:var(--paper);
+--surface-card:var(--paper);
+--surface-inverse:var(--ink);
+--surface-disabled:var(--dither-12);
+--surface-backdrop:var(--dither-50);
+--surface-signal:var(--signal);
+/* semantic — text */
+--text-body:var(--ink);
+--text-muted:var(--ink-60);
+--text-disabled:var(--ink-30);
+--text-inverse:var(--paper);
+--text-on-signal:var(--ink);
+/* semantic — lines */
+--border-color:var(--ink);
+--rule:1px solid var(--ink);
+--rule-dashed:1px dashed var(--ink);
+--rule-dotted:1px dotted var(--ink);
+--rule-strong:2px solid var(--ink);
+--rule-signal:1px solid var(--signal-backdrop);
+/* semantic — depth (hard offsets only, never blur) */
+--shadow-raised:2px 2px 0 0 var(--ink);
+--shadow-raised-lg:4px 4px 0 0 var(--ink);
+--shadow-pressed:none;
+/* semantic — status (shape carries meaning; colour only marks "now") */
+--status-pending:var(--signal);
+--status-confirmed:var(--ink);
+--status-failed:var(--ink);
+--status-dormant:var(--ink-60);
+--selection-bg:var(--ink);
+--selection-fg:var(--paper);
+}
+/* Inverse video (the LCD's other mode). Swap ink and paper; dithers become paper pixels. */
+[data-theme="invert"]{
+--ink:#eeeeee;
+--paper:#111111;
+--ink-60:#9A9A9A;
+--ink-30:#585858;
+--dither-12:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M0 0h1v1H0zM2 2h1v1H2z'/%3E%3C/svg%3E"); /* @kind other */
+--dither-25:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M0 0h1v1H0z'/%3E%3C/svg%3E"); /* @kind other */
+--dither-50:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M0 0h1v1H0zM1 1h1v1H1z'/%3E%3C/svg%3E"); /* @kind other */
+--dither-75:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M0 0h2v1H0zM0 1h1v1H0z'/%3E%3C/svg%3E"); /* @kind other */
+--dither-50-paper:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M0 0h1v1H0zM1 1h1v1H1z'/%3E%3C/svg%3E"); /* @kind other */
+--grid-dots:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M0 0h1v1H0z'/%3E%3C/svg%3E"); /* @kind other */
+--grid-cross:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M3 0h1v7H3zM0 3h7v1H0z'/%3E%3C/svg%3E"); /* @kind other */
+/* semantic aliases repeated so a nested inverse scope re-resolves them */
+/* semantic — surfaces */
+--surface-page:var(--paper);
+--surface-card:var(--paper);
+--surface-inverse:var(--ink);
+--surface-disabled:var(--dither-12);
+--surface-backdrop:var(--dither-50);
+--surface-signal:var(--signal);
+/* semantic — text */
+--text-body:var(--ink);
+--text-muted:var(--ink-60);
+--text-disabled:var(--ink-30);
+--text-inverse:var(--paper);
+--text-on-signal:#f3f3f3; /* --signal stays the same in both themes, so its foreground must be too */
+/* semantic — lines */
+--border-color:var(--ink);
+--rule:1px solid var(--ink);
+--rule-dashed:1px dashed var(--ink);
+--rule-dotted:1px dotted var(--ink);
+--rule-strong:2px solid var(--ink);
+/* semantic — depth (hard offsets only, never blur) */
+--shadow-raised:2px 2px 0 0 var(--ink);
+--shadow-raised-lg:4px 4px 0 0 var(--ink);
+--shadow-pressed:none;
+/* semantic — status (shape carries meaning; colour only marks "now") */
+--status-pending:var(--signal);
+--status-confirmed:var(--ink);
+--status-failed:var(--ink);
+--status-dormant:var(--ink-60);
+--selection-bg:var(--ink);
+--selection-fg:var(--paper);
+}

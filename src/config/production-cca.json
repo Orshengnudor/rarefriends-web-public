@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "chainId": 4663,
+  "ccaAddress": "0x0af64eC6f2Cf0A499411eeB428bA8A9AcD0E05fA",
+  "rfAddress": "0x0779369854d3EcdEA927206718FFD7730C67B71f",
+  "reserveAddress": "0xA850B2499c064900EfF341745807e1cB0d71a52b",
+  "deploymentBlock": "63273505",
+  "notifiedBlock": "63279647",
+  "deploymentTransactionHash": "0x0c8c48c91ebda81e116bbb2163171673cfc806eb71c673b70985415ca0751707",
+  "notificationTransactionHash": "0x667be655b020213be4d9298552a4a3457f0e3961bf8a70c78cafed34020dda24",
+  "runtimeHash": "0x9899da0698ee31ebd9b7b4a9fe358135f43a4a1646ab4e941620de1428418aad",
+  "settings": {
+    "totalSupply": "64000000000000000000000000",
+    "currency": "0x0000000000000000000000000000000000000000",
+    "startBlock": "63705000",
+    "endBlock": "64555555",
+    "claimBlock": "64590936",
+    "floorPrice": "30781359095488394437900",
+    "tickSpacing": "307813590954883944379",
+    "requiredCurrencyRaised": "20000000000000000000",
+    "validationHook": "0x0000000000000000000000000000000000000000",
+    "protocolFeeController": "0x0000000000000000000000000000000000000000"
+  },
+  "provenance": {
+    "abiSource": "deployment-console/public/cca-artifact.json",
+    "abiHash": "0x40acf72ebf8154c02c651b171be0f1c633fb7e1d982d46b2093d59cd446ad46c",
+    "upstreamRepository": "https://github.com/Uniswap/continuous-clearing-auction",
+    "upstreamCommit": "7d7602d257733315434570f2a0c2f94f1c7b207a",
+    "compiler": "0.8.26+commit.8a97fa7a"
+  },
+  "verifiedAt": {
+    "blockNumber": "63283419",
+    "blockHash": "0x0a30081c029f23916e1985e577318c80553cf3f6b63fb415630b8df9fc9d13ea",
+    "timestamp": "1789437257"
+  },
+  "reserveSnapshot": {
+    "conversionEnabled": false,
+    "retired": false,
+    "marketAddress": "0x99930E551b6f849bAabC4B491053eF28a700C4F2",
+    "marketSeeded": false,
+    "rfBalance": "0",
+    "inventoryCount": "128",
+    "conversionFee": "100000000000000000000000",
+    "conversionPayout": "1000000000000000000000000",
+    "plannedBacking": "896000000000000000000000000",
+    "liquidityAllocation": "64000000000000000000000000",
+    "operatorRfBalance": "960000000000000000000000000"
+  }
+}

@@ -1,0 +1,59 @@
+/* Shared UI primitives in src/components/ui. */
+.rf-icon{display:inline-block;width:var(--icon-md);height:var(--icon-md);flex:none;vertical-align:middle;background-color:currentColor;-webkit-mask:var(--icon) center/contain no-repeat;mask:var(--icon) center/contain no-repeat}
+.rf-icon[data-fallback="true"]{display:inline-flex;align-items:center;justify-content:center;overflow:hidden;background:none;-webkit-mask:none;mask:none;font-family:var(--font-mono);line-height:1}
+.rf-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);height:var(--control-md);padding:0 var(--control-pad-x-md);border:var(--rule);background:var(--paper);color:var(--ink);font:400 var(--text-md)/1 var(--font-mono);text-transform:lowercase;letter-spacing:var(--tracking-label);white-space:nowrap;cursor:pointer;user-select:none;text-decoration:none;box-shadow:var(--shadow-raised);appearance:none}
+.rf-btn[data-size="sm"]{height:var(--control-sm);padding:0 var(--control-pad-x-sm);font-size:var(--text-xs)}
+.rf-btn[data-size="lg"]{height:var(--control-lg);padding:0 var(--control-pad-x-lg);font-size:var(--text-base)}
+.rf-btn[data-brackets="true"]::before{content:"["}
+.rf-btn[data-brackets="true"]::after{content:"]"}
+.rf-btn:hover{background:var(--ink);color:var(--paper)}
+.rf-btn:active{transform:translate(2px,2px);box-shadow:var(--shadow-pressed)}
+.rf-btn[data-variant="primary"]{background:var(--ink);color:var(--paper)}
+.rf-btn[data-variant="primary"]:hover{background:var(--paper);color:var(--ink)}
+.rf-btn[data-variant="signal"]{background:var(--signal);color:var(--text-on-signal)}
+.rf-btn[data-variant="signal"]:hover{background:var(--text-on-signal);color:var(--signal)}
+.rf-btn[data-variant="ghost"]{border-color:transparent;box-shadow:none;padding:0 var(--space-1)}
+.rf-btn[data-variant="ghost"]:active{transform:none}
+.rf-btn[data-block="true"]{display:flex;width:100%}
+.rf-btn:disabled,.rf-btn[aria-disabled="true"]{border-style:dashed;border-color:var(--ink);background:var(--paper);color:var(--text-disabled);box-shadow:none;transform:none;cursor:not-allowed}
+.rf-btn[data-loading="true"]{pointer-events:none}
+.rf-btn .rf-spinner::before{color:inherit}
+.rf-iconbtn{display:inline-flex;align-items:center;justify-content:center;width:var(--control-md);height:var(--control-md);padding:0;border:var(--rule);background:var(--paper);color:var(--ink);cursor:pointer;box-shadow:var(--shadow-raised);appearance:none;flex:none}
+.rf-iconbtn[data-size="sm"]{width:var(--control-sm);height:var(--control-sm)}
+.rf-iconbtn[data-size="lg"]{width:var(--control-lg);height:var(--control-lg)}
+.rf-iconbtn:hover{background:var(--ink);color:var(--paper)}
+.rf-iconbtn:active{transform:translate(2px,2px);box-shadow:var(--shadow-pressed)}
+.rf-iconbtn[data-variant="primary"]{background:var(--ink);color:var(--paper)}
+.rf-iconbtn[data-variant="primary"]:hover{background:var(--paper);color:var(--ink)}
+.rf-iconbtn[data-variant="signal"]{background:var(--signal);color:var(--text-on-signal)}
+.rf-iconbtn[data-variant="signal"]:hover{background:var(--text-on-signal);color:var(--signal)}
+.rf-iconbtn[data-variant="ghost"]{border-color:transparent;box-shadow:none}
+.rf-iconbtn[data-variant="ghost"]:active{transform:none}
+.rf-iconbtn:disabled{border-style:dashed;color:var(--text-disabled);box-shadow:none;transform:none;cursor:not-allowed}
+.rf-backdrop{position:fixed;inset:0;z-index:var(--z-overlay);display:flex;align-items:center;justify-content:center;padding:var(--space-5);background-image:var(--surface-backdrop)}
+.rf-dialog{display:flex;flex-direction:column;width:480px;max-width:100%;max-height:100%;overflow:hidden;border:var(--rule);background:var(--paper);color:var(--ink);box-shadow:var(--shadow-raised-lg)}
+.rf-dialog-title{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);height:var(--control-md);padding:0 var(--space-1) 0 var(--space-3);background:var(--ink);color:var(--paper);font:var(--type-label);text-transform:lowercase;letter-spacing:var(--tracking-label);flex:none}
+.rf-dialog-body{padding:var(--space-4);font:var(--type-body-sm);overflow:auto;min-height:0}
+.rf-dialog-foot{display:flex;flex:none;justify-content:flex-end;gap:var(--space-2);padding:var(--space-3) var(--space-4);border-top:var(--rule)}
+.rf-progress{display:flex;flex-direction:column;gap:var(--space-1);min-width:0}
+.rf-progress-bar{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:var(--border-w);height:8px;padding:var(--border-w);border:var(--rule);background:var(--paper)}
+.rf-progress[data-size="lg"] .rf-progress-bar{height:16px}
+.rf-progress[data-signal="true"] .rf-progress-bar{border:var(--rule-signal);background:var(--signal-backdrop)}
+.rf-progress-cell{background:var(--paper)}
+.rf-progress-cell[data-on="true"]{background:var(--ink)}
+.rf-progress[data-signal="true"] .rf-progress-cell[data-on="true"]{background:var(--signal)}
+.rf-progress[data-indeterminate="true"] .rf-progress-cell{background:var(--ink)}
+.rf-progress[data-signal="true"][data-indeterminate="true"] .rf-progress-cell{background:var(--signal)}
+.rf-progress[data-indeterminate="true"] .rf-progress-cell:nth-child(odd){animation:rf-blink var(--duration-blink) var(--ease-step) infinite}
+.rf-progress[data-indeterminate="true"] .rf-progress-cell:nth-child(even){opacity:0;animation:rf-blink-alt var(--duration-blink) var(--ease-step) infinite}
+.rf-progress-meta{display:flex;justify-content:space-between;gap:var(--space-2);font:var(--type-label);text-transform:lowercase;color:var(--text-muted)}
+.rf-art{display:block;width:var(--art);height:var(--art);flex:none;border:var(--rule);background:var(--paper);color:var(--ink);image-rendering:pixelated}
+.rf-art svg{width:100%;height:100%;display:block;shape-rendering:crispEdges}
+.rf-art[data-inverse="true"]{background:var(--ink);color:var(--paper)}
+.rf-btn[data-case="preserve"],.rf-dialog-title[data-case="preserve"]{text-transform:none}
+@media (forced-colors:active){
+.rf-icon{forced-color-adjust:none;background-color:CanvasText}
+.rf-icon[data-fallback="true"]{background:none;color:CanvasText}
+.rf-progress-cell{forced-color-adjust:none;background:Canvas}
+.rf-progress .rf-progress-cell[data-on="true"],.rf-progress[data-signal="true"] .rf-progress-cell[data-on="true"],.rf-progress[data-indeterminate="true"] .rf-progress-cell,.rf-progress[data-signal="true"][data-indeterminate="true"] .rf-progress-cell{background:CanvasText}
+}

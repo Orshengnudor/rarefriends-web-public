@@ -1,0 +1,484 @@
+{
+  "portraits": [
+    {
+      "id": 1,
+      "grid": 8,
+      "rows": [
+        "........",
+        ".######.",
+        ".######.",
+        ".######.",
+        ".######.",
+        ".#.##.#.",
+        ".######.",
+        "........"
+      ],
+      "path": "M1 1h1v1h-1zM2 1h1v1h-1zM3 1h1v1h-1zM4 1h1v1h-1zM5 1h1v1h-1zM6 1h1v1h-1zM1 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM5 2h1v1h-1zM6 2h1v1h-1zM1 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM5 3h1v1h-1zM6 3h1v1h-1zM1 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM6 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM6 5h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1z"
+    },
+    {
+      "id": 2,
+      "grid": 8,
+      "rows": [
+        "........",
+        ".##..##.",
+        "..#..#..",
+        "..####..",
+        ".#.##.#.",
+        ".######.",
+        "..####..",
+        "........"
+      ],
+      "path": "M1 1h1v1h-1zM2 1h1v1h-1zM5 1h1v1h-1zM6 1h1v1h-1zM2 2h1v1h-1zM5 2h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM5 3h1v1h-1zM1 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM1 5h1v1h-1zM2 5h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM5 5h1v1h-1zM6 5h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1z"
+    },
+    {
+      "id": 3,
+      "grid": 8,
+      "rows": [
+        "........",
+        "..####..",
+        ".######.",
+        ".#.##.#.",
+        "..####..",
+        "..####..",
+        "...##...",
+        "........"
+      ],
+      "path": "M2 1h1v1h-1zM3 1h1v1h-1zM4 1h1v1h-1zM5 1h1v1h-1zM1 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM5 2h1v1h-1zM6 2h1v1h-1zM1 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM2 5h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM5 5h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1z"
+    },
+    {
+      "id": 4,
+      "grid": 8,
+      "rows": [
+        "........",
+        "...##...",
+        "...##...",
+        ".######.",
+        ".#.##.#.",
+        ".##..##.",
+        "..####..",
+        "........"
+      ],
+      "path": "M3 1h1v1h-1zM4 1h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM1 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM5 3h1v1h-1zM6 3h1v1h-1zM1 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM1 5h1v1h-1zM2 5h1v1h-1zM5 5h1v1h-1zM6 5h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1z"
+    },
+    {
+      "id": 5,
+      "grid": 8,
+      "rows": [
+        "........",
+        ".#....#.",
+        ".######.",
+        ".#.##.#.",
+        ".#.##.#.",
+        "..####..",
+        "..####..",
+        "........"
+      ],
+      "path": "M1 1h1v1h-1zM6 1h1v1h-1zM1 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM5 2h1v1h-1zM6 2h1v1h-1zM1 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM1 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM2 5h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM5 5h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1z"
+    },
+    {
+      "id": 6,
+      "grid": 8,
+      "rows": [
+        "........",
+        ".######.",
+        ".#.##.#.",
+        ".######.",
+        "...##...",
+        "...##...",
+        "...##...",
+        "........"
+      ],
+      "path": "M1 1h1v1h-1zM2 1h1v1h-1zM3 1h1v1h-1zM4 1h1v1h-1zM5 1h1v1h-1zM6 1h1v1h-1zM1 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM1 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM5 3h1v1h-1zM6 3h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1z"
+    },
+    {
+      "id": 7,
+      "grid": 8,
+      "rows": [
+        "........",
+        "..#..#..",
+        "..#..#..",
+        "..#..#..",
+        "..####..",
+        ".#.##.#.",
+        ".######.",
+        "........"
+      ],
+      "path": "M2 1h1v1h-1zM5 1h1v1h-1zM2 2h1v1h-1zM5 2h1v1h-1zM2 3h1v1h-1zM5 3h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM6 5h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1z"
+    },
+    {
+      "id": 8,
+      "grid": 8,
+      "rows": [
+        "........",
+        ".##..##.",
+        ".######.",
+        ".#.##.#.",
+        ".##..##.",
+        ".######.",
+        "...##...",
+        "........"
+      ],
+      "path": "M1 1h1v1h-1zM2 1h1v1h-1zM5 1h1v1h-1zM6 1h1v1h-1zM1 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM5 2h1v1h-1zM6 2h1v1h-1zM1 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM1 4h1v1h-1zM2 4h1v1h-1zM5 4h1v1h-1zM6 4h1v1h-1zM1 5h1v1h-1zM2 5h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM5 5h1v1h-1zM6 5h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1z"
+    },
+    {
+      "id": 9,
+      "grid": 8,
+      "rows": [
+        "........",
+        "...##...",
+        "...##...",
+        "...##...",
+        ".######.",
+        ".#.##.#.",
+        ".######.",
+        "........"
+      ],
+      "path": "M3 1h1v1h-1zM4 1h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM1 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM6 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM6 5h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1z"
+    },
+    {
+      "id": 10,
+      "grid": 8,
+      "rows": [
+        "........",
+        ".#....#.",
+        ".#....#.",
+        ".#.##.#.",
+        ".######.",
+        ".#.##.#.",
+        ".######.",
+        "........"
+      ],
+      "path": "M1 1h1v1h-1zM6 1h1v1h-1zM1 2h1v1h-1zM6 2h1v1h-1zM1 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM1 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM6 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM6 5h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1z"
+    },
+    {
+      "id": 11,
+      "grid": 8,
+      "rows": [
+        "........",
+        ".#....#.",
+        ".#....#.",
+        ".######.",
+        ".#.##.#.",
+        ".######.",
+        "...##...",
+        "........"
+      ],
+      "path": "M1 1h1v1h-1zM6 1h1v1h-1zM1 2h1v1h-1zM6 2h1v1h-1zM1 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM5 3h1v1h-1zM6 3h1v1h-1zM1 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM1 5h1v1h-1zM2 5h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM5 5h1v1h-1zM6 5h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1z"
+    },
+    {
+      "id": 12,
+      "grid": 8,
+      "rows": [
+        "........",
+        "..#..#..",
+        "..####..",
+        ".#.##.#.",
+        ".######.",
+        "...##...",
+        ".######.",
+        "........"
+      ],
+      "path": "M2 1h1v1h-1zM5 1h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM5 2h1v1h-1zM1 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM1 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM6 4h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1z"
+    },
+    {
+      "id": 13,
+      "grid": 8,
+      "rows": [
+        "........",
+        "..#..#..",
+        ".##..##.",
+        ".######.",
+        ".#.##.#.",
+        ".##..##.",
+        ".######.",
+        "........"
+      ],
+      "path": "M2 1h1v1h-1zM5 1h1v1h-1zM1 2h1v1h-1zM2 2h1v1h-1zM5 2h1v1h-1zM6 2h1v1h-1zM1 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM5 3h1v1h-1zM6 3h1v1h-1zM1 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM1 5h1v1h-1zM2 5h1v1h-1zM5 5h1v1h-1zM6 5h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1z"
+    },
+    {
+      "id": 14,
+      "grid": 8,
+      "rows": [
+        "........",
+        ".######.",
+        ".#.##.#.",
+        ".##..##.",
+        ".######.",
+        ".######.",
+        "...##...",
+        "........"
+      ],
+      "path": "M1 1h1v1h-1zM2 1h1v1h-1zM3 1h1v1h-1zM4 1h1v1h-1zM5 1h1v1h-1zM6 1h1v1h-1zM1 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM1 3h1v1h-1zM2 3h1v1h-1zM5 3h1v1h-1zM6 3h1v1h-1zM1 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM6 4h1v1h-1zM1 5h1v1h-1zM2 5h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM5 5h1v1h-1zM6 5h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1z"
+    },
+    {
+      "id": 15,
+      "grid": 8,
+      "rows": [
+        "........",
+        "..####..",
+        ".#.##.#.",
+        ".######.",
+        ".##..##.",
+        "..####..",
+        "..####..",
+        "........"
+      ],
+      "path": "M2 1h1v1h-1zM3 1h1v1h-1zM4 1h1v1h-1zM5 1h1v1h-1zM1 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM1 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM5 3h1v1h-1zM6 3h1v1h-1zM1 4h1v1h-1zM2 4h1v1h-1zM5 4h1v1h-1zM6 4h1v1h-1zM2 5h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM5 5h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1z"
+    },
+    {
+      "id": 16,
+      "grid": 8,
+      "rows": [
+        "........",
+        "...##...",
+        ".######.",
+        ".#.##.#.",
+        ".######.",
+        ".##..##.",
+        ".######.",
+        "........"
+      ],
+      "path": "M3 1h1v1h-1zM4 1h1v1h-1zM1 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM5 2h1v1h-1zM6 2h1v1h-1zM1 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM1 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM6 4h1v1h-1zM1 5h1v1h-1zM2 5h1v1h-1zM5 5h1v1h-1zM6 5h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1z"
+    },
+    {
+      "id": 17,
+      "grid": 8,
+      "rows": [
+        "........",
+        "..##....",
+        "..##....",
+        ".######.",
+        ".#.##.#.",
+        ".#.##.#.",
+        ".######.",
+        "........"
+      ],
+      "path": "M2 1h1v1h-1zM3 1h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM1 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM5 3h1v1h-1zM6 3h1v1h-1zM1 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM6 5h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1z"
+    },
+    {
+      "id": 18,
+      "grid": 8,
+      "rows": [
+        "........",
+        ".#....#.",
+        ".######.",
+        ".#.##.#.",
+        "..####..",
+        "...##...",
+        ".######.",
+        "........"
+      ],
+      "path": "M1 1h1v1h-1zM6 1h1v1h-1zM1 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM5 2h1v1h-1zM6 2h1v1h-1zM1 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1z"
+    },
+    {
+      "id": 19,
+      "grid": 8,
+      "rows": [
+        "........",
+        ".######.",
+        ".#.##.#.",
+        ".#.##.#.",
+        "..####..",
+        ".##..##.",
+        "..####..",
+        "........"
+      ],
+      "path": "M1 1h1v1h-1zM2 1h1v1h-1zM3 1h1v1h-1zM4 1h1v1h-1zM5 1h1v1h-1zM6 1h1v1h-1zM1 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM1 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM1 5h1v1h-1zM2 5h1v1h-1zM5 5h1v1h-1zM6 5h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1z"
+    },
+    {
+      "id": 20,
+      "grid": 8,
+      "rows": [
+        "........",
+        "...##...",
+        "..####..",
+        "..####..",
+        ".#.##.#.",
+        ".######.",
+        ".######.",
+        "........"
+      ],
+      "path": "M3 1h1v1h-1zM4 1h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM5 2h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM5 3h1v1h-1zM1 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM1 5h1v1h-1zM2 5h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM5 5h1v1h-1zM6 5h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1z"
+    },
+    {
+      "id": 21,
+      "grid": 8,
+      "rows": [
+        "........",
+        "...##...",
+        "..####..",
+        ".#.##.#.",
+        ".#.##.#.",
+        ".######.",
+        "...##...",
+        "........"
+      ],
+      "path": "M3 1h1v1h-1zM4 1h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM5 2h1v1h-1zM1 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM1 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM1 5h1v1h-1zM2 5h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM5 5h1v1h-1zM6 5h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1z"
+    },
+    {
+      "id": 22,
+      "grid": 8,
+      "rows": [
+        "........",
+        ".##..##.",
+        "..####..",
+        ".######.",
+        ".#.##.#.",
+        "..####..",
+        "...##...",
+        "........"
+      ],
+      "path": "M1 1h1v1h-1zM2 1h1v1h-1zM5 1h1v1h-1zM6 1h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM5 2h1v1h-1zM1 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM5 3h1v1h-1zM6 3h1v1h-1zM1 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM2 5h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM5 5h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1z"
+    },
+    {
+      "id": 23,
+      "grid": 8,
+      "rows": [
+        "........",
+        "....##..",
+        "....##..",
+        ".######.",
+        ".#.##.#.",
+        ".#.##.#.",
+        ".######.",
+        "........"
+      ],
+      "path": "M4 1h1v1h-1zM5 1h1v1h-1zM4 2h1v1h-1zM5 2h1v1h-1zM1 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM5 3h1v1h-1zM6 3h1v1h-1zM1 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM6 5h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1z"
+    },
+    {
+      "id": 24,
+      "grid": 8,
+      "rows": [
+        "........",
+        "..####..",
+        ".#.##.#.",
+        ".######.",
+        "..####..",
+        "...##...",
+        ".######.",
+        "........"
+      ],
+      "path": "M2 1h1v1h-1zM3 1h1v1h-1zM4 1h1v1h-1zM5 1h1v1h-1zM1 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM1 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM5 3h1v1h-1zM6 3h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1z"
+    },
+    {
+      "id": 25,
+      "grid": 8,
+      "rows": [
+        "........",
+        ".#....#.",
+        ".##..##.",
+        "..####..",
+        "..####..",
+        ".#.##.#.",
+        ".######.",
+        "........"
+      ],
+      "path": "M1 1h1v1h-1zM6 1h1v1h-1zM1 2h1v1h-1zM2 2h1v1h-1zM5 2h1v1h-1zM6 2h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM5 3h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM6 5h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1z"
+    },
+    {
+      "id": 26,
+      "grid": 8,
+      "rows": [
+        "........",
+        ".######.",
+        ".#.##.#.",
+        ".#.##.#.",
+        ".######.",
+        "...##...",
+        "..####..",
+        "........"
+      ],
+      "path": "M1 1h1v1h-1zM2 1h1v1h-1zM3 1h1v1h-1zM4 1h1v1h-1zM5 1h1v1h-1zM6 1h1v1h-1zM1 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM1 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM1 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM6 4h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1z"
+    },
+    {
+      "id": 27,
+      "grid": 8,
+      "rows": [
+        "........",
+        "..#..#..",
+        "..#..#..",
+        ".######.",
+        ".######.",
+        ".#.##.#.",
+        "..####..",
+        "........"
+      ],
+      "path": "M2 1h1v1h-1zM5 1h1v1h-1zM2 2h1v1h-1zM5 2h1v1h-1zM1 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM5 3h1v1h-1zM6 3h1v1h-1zM1 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM6 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM6 5h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1z"
+    },
+    {
+      "id": 28,
+      "grid": 8,
+      "rows": [
+        "........",
+        "..#..#..",
+        "..####..",
+        ".#.##.#.",
+        ".######.",
+        ".##..##.",
+        "..####..",
+        "........"
+      ],
+      "path": "M2 1h1v1h-1zM5 1h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM5 2h1v1h-1zM1 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM1 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM6 4h1v1h-1zM1 5h1v1h-1zM2 5h1v1h-1zM5 5h1v1h-1zM6 5h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1z"
+    },
+    {
+      "id": 29,
+      "grid": 8,
+      "rows": [
+        "........",
+        "..##....",
+        ".######.",
+        ".######.",
+        ".#.##.#.",
+        ".######.",
+        "..####..",
+        "........"
+      ],
+      "path": "M2 1h1v1h-1zM3 1h1v1h-1zM1 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM5 2h1v1h-1zM6 2h1v1h-1zM1 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM5 3h1v1h-1zM6 3h1v1h-1zM1 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM1 5h1v1h-1zM2 5h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM5 5h1v1h-1zM6 5h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1z"
+    },
+    {
+      "id": 30,
+      "grid": 8,
+      "rows": [
+        "........",
+        ".##..##.",
+        ".#....#.",
+        ".######.",
+        ".#.##.#.",
+        "..####..",
+        ".######.",
+        "........"
+      ],
+      "path": "M1 1h1v1h-1zM2 1h1v1h-1zM5 1h1v1h-1zM6 1h1v1h-1zM1 2h1v1h-1zM6 2h1v1h-1zM1 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM5 3h1v1h-1zM6 3h1v1h-1zM1 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM2 5h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM5 5h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1z"
+    },
+    {
+      "id": 31,
+      "grid": 8,
+      "rows": [
+        "........",
+        ".######.",
+        ".#.##.#.",
+        "..####..",
+        "..####..",
+        "..####..",
+        "..####..",
+        "........"
+      ],
+      "path": "M1 1h1v1h-1zM2 1h1v1h-1zM3 1h1v1h-1zM4 1h1v1h-1zM5 1h1v1h-1zM6 1h1v1h-1zM1 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM5 3h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM2 5h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM5 5h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1z"
+    },
+    {
+      "id": 32,
+      "grid": 8,
+      "rows": [
+        "........",
+        ".######.",
+        ".#.##.#.",
+        ".##..##.",
+        "..####..",
+        "...##...",
+        "..####..",
+        "........"
+      ],
+      "path": "M1 1h1v1h-1zM2 1h1v1h-1zM3 1h1v1h-1zM4 1h1v1h-1zM5 1h1v1h-1zM6 1h1v1h-1zM1 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM1 3h1v1h-1zM2 3h1v1h-1zM5 3h1v1h-1zM6 3h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1z"
+    }
+  ]
+}

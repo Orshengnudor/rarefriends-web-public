@@ -1,0 +1,45 @@
+/* Rare Friends — space, size, layers. 8px unit; 4px half-step; radius is always 0. */
+:root{
+--u:8px; /* @kind spacing */
+--space-0:0;
+--space-1:4px;
+--space-2:8px;
+--space-3:12px;
+--space-4:16px;
+--space-5:24px;
+--space-6:32px;
+--space-7:48px;
+--space-8:64px;
+--space-9:96px;
+--space-10:128px;
+/* geometry */
+--radius:0;
+--radius-none:0;
+--border-w:1px;
+--border-w-strong:2px;
+/* controls */
+--control-sm:24px;
+--control-md:32px;
+--control-lg:40px;
+--control-pad-x-sm:8px;
+--control-pad-x-md:12px;
+--control-pad-x-lg:16px;
+/* icons — pixelarticons are a 12×12 pixel grid; stay on 12/24/36/48 for crisp edges */
+--icon-xs:12px;
+--icon-md:24px;
+--icon-lg:36px;
+--icon-xl:48px;
+/* layout */
+--container-sm:640px;
+--container-md:960px;
+--container-lg:1120px;
+--measure:64ch; /* @kind other */
+--gutter:var(--space-5);
+--lcd:128px; /* Sharp Memory LCD: 128×128 */
+--art:128px; /* friend art renders at LCD size or 2× (256) */
+/* layers */
+--z-sticky:10; /* @kind other */
+--z-overlay:100; /* @kind other */
+--z-toast:200; /* @kind other */
+--z-tooltip:300; /* @kind other */
+}

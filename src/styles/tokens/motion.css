@@ -1,0 +1,18 @@
+/* Rare Friends — motion. States flip; nothing eases. The only motion is stepped: a blinking cursor, a text spinner, a bar filling block by block. */
+:root{
+--duration-0:0ms; /* @kind other */
+--duration-tick:100ms; /* @kind other */
+--duration-blink:1000ms; /* @kind other */
+--duration-spin:800ms; /* @kind other */
+--ease-step:steps(1,end); /* @kind other */
+--ease-none:linear; /* @kind other */
+}
+@keyframes rf-blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+/* Blink the signal fill only, keeping its black frame visible throughout. */
+@keyframes rf-signal-blink{0%,49%{background-color:var(--signal)}50%,100%{background-color:var(--signal-backdrop)}}
+@keyframes rf-spin{0%{content:"|"}25%{content:"/"}50%{content:"-"}75%{content:"\\"}}
+@keyframes rf-blink-alt{0%,49%{opacity:0}50%,100%{opacity:1}}
+@keyframes rf-scan{0%{transform:translateY(0)}100%{transform:translateY(100%)}}
+@keyframes rf-fill{0%{width:0}100%{width:100%}}
+/* `*` does not match pseudo-elements, and the cursor, the spinner and the live pixel all live on one. */
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0ms!important;animation-iteration-count:1!important}}

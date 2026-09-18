@@ -1,0 +1,46 @@
+/* Element defaults and shared layout utilities. */
+html { scroll-behavior: auto; scroll-padding: var(--space-6) 0 var(--space-7); }
+body { min-width: 320px; overflow-x: hidden; }
+button { color: inherit; }
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: var(--leading-display);
+  font-synthesis: none;
+}
+.rf-display { font-synthesis: none; -webkit-font-smoothing: none; }
+.rf-data, .rf-label { font-synthesis: none; }
+
+/* Skip link */
+.skip-link {
+  position: fixed;
+  z-index: var(--z-tooltip);
+  top: 0;
+  left: 0;
+  padding: var(--space-2) var(--space-3);
+  border: var(--rule);
+  background: var(--paper);
+  color: var(--ink);
+  font: var(--type-label);
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+.skip-link:focus-visible { transform: none; }
+
+/* Layout helpers */
+.button-row { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-3); }
+.stack-xs, .stack-sm, .stack-md { display: flex; flex-direction: column; }
+.stack-xs { gap: var(--space-1); }
+.stack-sm { gap: var(--space-2); }
+.stack-md { gap: var(--space-4); }
+
+/* Error and missing-page states. */
+.empty-page { min-height: 50vh; padding: var(--space-7) var(--space-6); }
+.empty-page h1 { margin-bottom: var(--space-4); }
+.empty-page p { margin-bottom: var(--space-5); }
+
+@media (max-width: 720px) {
+  .empty-page { padding: var(--space-6) var(--space-4); }
+  .rf-dialog { max-width: calc(100vw - var(--space-5)); }
+  .rf-backdrop { padding: var(--space-3); }
+}

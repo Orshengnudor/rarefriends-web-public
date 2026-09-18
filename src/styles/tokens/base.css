@@ -1,0 +1,73 @@
+/* Rare Friends — element defaults + utility classes. */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--surface-page);color:var(--text-body);font:var(--type-body);font-optical-sizing:auto;-webkit-font-smoothing:antialiased}
+::selection{background:var(--selection-bg);color:var(--selection-fg)}
+a{color:var(--text-body);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}
+a:hover{background:var(--ink);color:var(--paper);text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit;border-radius:0}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+h1,h2,h3,h4,h5,h6,p,figure{margin:0}
+img,svg,canvas{display:block}
+hr{border:0;border-top:var(--rule);margin:0}
+code,kbd,pre,samp{font-family:var(--font-mono)}
+table{border-collapse:collapse}
+/* type */
+.rf-display{font-family:var(--font-display);font-weight:400;line-height:var(--leading-display);letter-spacing:var(--tracking-display)}
+.rf-hero{font:var(--type-hero)}
+.rf-headline{font:var(--type-headline)}
+.rf-title{font:var(--type-title)}
+.rf-body{font:var(--type-body)}
+.rf-body-sm{font:var(--type-body-sm)}
+.rf-mono{font-family:var(--font-mono)}
+.rf-data{font:var(--type-data);font-variant-numeric:tabular-nums}
+.rf-label{font:var(--type-label);text-transform:lowercase;letter-spacing:var(--tracking-label);color:var(--text-muted)}
+.rf-label-ink{font:var(--type-label);text-transform:lowercase;letter-spacing:var(--tracking-label);color:var(--text-body)}
+.rf-muted{color:var(--text-muted)}
+.rf-condensed{font-stretch:var(--stretch-condensed)}
+.rf-tabular{font-variant-numeric:tabular-nums}
+/* surfaces + lines */
+.rf-inverse{background:var(--ink);color:var(--paper)}
+.rf-signal{background:var(--signal);color:var(--text-on-signal)}
+.rf-dither-12{background-image:var(--dither-12)}
+.rf-dither-25{background-image:var(--dither-25)}
+.rf-dither-50{background-image:var(--dither-50)}
+.rf-dither-75{background-image:var(--dither-75)}
+/* Fade the shared 12% dither at the top and bottom. Reserve padding beyond the
+   band depth (48px by default, or --dither-fade-depth:var(--space-6) for 32px).
+   Uses both pseudo-elements; keep at least 8px of clear paper before content. */
+.rf-dither-fade{position:relative;background:var(--paper);color:var(--ink)}
+.rf-dither-fade::before,.rf-dither-fade::after{
+  content:"";
+  position:absolute;
+  inset-inline:0;
+  height:var(--dither-fade-depth,var(--space-7));
+  pointer-events:none;
+  background-image:var(--dither-12);
+  mask-image:var(--dither-fade-mask);
+  mask-size:64px 48px;
+  mask-position:left bottom;
+  mask-repeat:repeat-x;
+}
+.rf-dither-fade::before{top:0}
+.rf-dither-fade::after{bottom:0;transform:rotate(180deg)}
+@media print{
+  .rf-dither-fade::before,.rf-dither-fade::after{display:none}
+}
+.rf-grid-dots{background-image:var(--grid-dots)}
+.rf-grid-cross{background-image:var(--grid-cross)}
+.rf-box{border:var(--rule)}
+.rf-box-dashed{border:var(--rule-dashed)}
+.rf-box-strong{border:var(--rule-strong)}
+.rf-raised{box-shadow:var(--shadow-raised)}
+.rf-raised-lg{box-shadow:var(--shadow-raised-lg)}
+.rf-rule{border-top:var(--rule)}
+.rf-rule-dashed{border-top:var(--rule-dashed)}
+.rf-rule-dotted{border-top:var(--rule-dotted)}
+/* terminal details */
+.rf-cursor::after{content:"█";display:inline-block;margin-left:calc(var(--space-1) / 2);animation:rf-blink var(--duration-blink) var(--ease-step) infinite}
+.rf-prompt::before{content:"> ";font-family:var(--font-mono)}
+.rf-bracket::before{content:"[ "}
+.rf-bracket::after{content:" ]"}
+.rf-spinner::before{content:"|";display:inline-block;width:1ch;font-family:var(--font-mono);animation:rf-spin var(--duration-spin) var(--ease-step) infinite}
+.rf-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}

@@ -1,0 +1,22 @@
+# Deployment uploads do not inherit all Git ignore rules.
+.git/
+node_modules/
+.next/
+out/
+coverage/
+tsconfig.tsbuildinfo
+.local/
+.vercel/
+
+# Configure runtime credentials in Vercel, never in the source upload.
+.env*
+!.env.example
+*.env
+!*.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+*.log
+.DS_Store
