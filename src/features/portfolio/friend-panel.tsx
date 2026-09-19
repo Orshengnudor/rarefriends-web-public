@@ -56,11 +56,7 @@ function weightAfter(account: ProtocolAccount, friend: PortfolioFriend, action: 
 }
 
 export function FriendPanel({ friend, account, onClose }: FriendPanelProps) {
-<<<<<<< HEAD
-  const { busy, executeAction, snapshot, publicSnapshot, publicError, error: snapshotError } = useProtocol();
-=======
   const { executeAction, busy, snapshot, publicSnapshot, publicError, error: snapshotError } = useProtocol();
->>>>>>> upstream/main
   const usd = useUsdFormat();
   const [chosenKind, setChosenKind] = useState<"activate" | "upgrade" | "promote" | null>(null);
   const [review, setReview] = useState<PortfolioAction | null>(null);
@@ -132,11 +128,7 @@ export function FriendPanel({ friend, account, onClose }: FriendPanelProps) {
     <h3 id={`${panelId}-rewards`}>{copy.friend.rewards}</h3>
     <div className="app-fp-reward-list">{(["RF", "WETH"] as const).map(asset => {
       const amount = asset === "RF" ? friend.earnings : friend.earningsWeth ?? 0;
-<<<<<<< HEAD
-      return <div className="app-fp-reward-row" key={asset}><strong>{number(amount, asset === "RF" ? 3 : 6)} <span>{asset}</span></strong><Button size="sm" preserveCase disabled={busy || !wallet || amount <= 0} onClick={async () => { if (await executeAction({ kind: "claim", friendId: friend.id, collection: friend.collection, asset })) setNotice(copy.friend.confirmed); }}>claim {asset}</Button></div>;
-=======
       return <div className="app-fp-reward-row" key={asset}><strong>{number(amount, asset === "RF" ? 3 : 6)} <span>{asset}</span></strong><Button size="sm" preserveCase disabled={busy || !wallet || amount <= 0} onClick={() => void executeAction({ kind: "claim", friendId: friend.id, collection: friend.collection, asset })}>claim {asset}</Button></div>;
->>>>>>> upstream/main
     })}</div>
   </section>;
 
