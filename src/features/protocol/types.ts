@@ -18,7 +18,7 @@ export interface ProtocolData {
   metrics: { initialSupply: number; supplyBurned: number; vaultInventory: number; ammVolumeEth: number; ammVolumeUsd: number; activatedGenesis: number; genesisWeight: number; generationsWeight: number; distributedRf: number; distributedWeth: number; distributedUsd: number;
     /** Unreleased reward-stream balance still to pay, and this UTC week's dripped rewards; when available in the current snapshot. */
     streamRemainingRf?: number; streamRemainingWeth?: number; streamRemainingUsd?: number; weekRewardsRf?: number; weekRewardsWeth?: number; weekRewardsUsd?: number;
-    /** Annualized active reward streams over the value of all activated weight, in percent. */
+    /** Annualized active and pending rewards over cumulative RF activation payments, in percent. */
     rewardApy?: number;
     /** Friends (Genesis + Generations) currently holding an active reward position. */
     friendsPlaying?: number };
@@ -28,7 +28,8 @@ export interface ProtocolData {
   prices: { ethUsd: number; rfUsd: number; label: string; usdAvailable?: boolean; usdSource?: "coingecko" | null;
     /** Price observation time in Unix milliseconds; independent of the chain snapshot. */
     usdUpdatedAt?: number | null; usdStale?: boolean };
-  coverage: { fromBlock: string; toBlock: string; rewards: "since-deployment"; portfolio: "current-snapshot"; nfts: "known-collections" };
+  /** Historical totals may trail live contract views by the service's five-minute schedule. */
+  coverage: { metricsBlockNumber?: string; metricsTimestamp?: number; fromBlock: string; toBlock: string; rewards: "since-deployment"; portfolio: "current-snapshot"; nfts: "known-collections" };
   marketReady: boolean;
 }
 

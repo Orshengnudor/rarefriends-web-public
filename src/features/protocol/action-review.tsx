@@ -27,17 +27,14 @@ export function ActionReview({ action, account, onBack, onDone }: {
   const symbol = quote?.asset === "ETH" ? "ETH" : quote?.asset === "WETH" ? "WETH" : RF_SYMBOL;
   const number = (value: number) => value.toLocaleString("en-US", { maximumFractionDigits: quote?.asset === "RF" ? 4 : 6 });
   const balance = quote?.asset === "ETH" ? account.eth : quote?.asset === "WETH" ? account.weth : account.tokenBalance;
-  const friendClaim = action.kind === "claim" && quote?.rewardDestination === "friend-wallet";
-  const withdraw = action.kind === "withdraw";
   const convert = action.kind === "convert";
   return <div className="app-fp-review app-live-review" aria-label="Review transaction">
     <span className="app-fp-label">{copy.review}</span>
     <h3>{quote?.title ?? copy.loadingQuote}</h3>
     {quote && <><p>{quote.description}</p><dl>
-      {!withdraw && <div><dt>cost</dt><dd>{number(quote.cost)} {symbol}</dd></div>}
-      {quote.receive > 0 && <div><dt>{friendClaim ? action.friendId === undefined ? "NFT wallets receive" : "NFT wallet receives" : "receive"}</dt><dd>{number(quote.receive)} {symbol}</dd></div>}
-      {withdraw && <div><dt>NFT wallet after</dt><dd>0 {symbol}</dd></div>}
-      <div><dt>{quote.asset === "ETH" ? "connected wallet after · before gas" : friendClaim || withdraw ? "connected wallet after · estimated" : "balance after · estimated"}</dt><dd>{number(balance - quote.cost + (friendClaim ? 0 : quote.receive))} {symbol}</dd></div>
+      <div><dt>cost</dt><dd>{number(quote.cost)} {symbol}</dd></div>
+      {quote.receive > 0 && <div><dt>receive</dt><dd>{number(quote.receive)} {symbol}</dd></div>}
+      <div><dt>{quote.asset === "ETH" ? "connected wallet after · before gas" : "balance after · estimated"}</dt><dd>{number(balance - quote.cost + quote.receive)} {symbol}</dd></div>
       <div><dt>{copy.networkFee}</dt><dd>{copy.walletFee}</dd></div>
     </dl></>}
     {!query.error && <TransactionSteps plan={query.data} progress={progress} />}
@@ -49,7 +46,7 @@ export function ActionReview({ action, account, onBack, onDone }: {
       <Button size="sm" variant="primary" preserveCase disabled={busy || !quote?.enabled || query.isFetching || (convert && !accepted)} onClick={async () => {
         if (await executeAction(action, query.data)) onDone();
         else await query.refetch();
-      }}>{busy ? copy.confirming : `confirm ${action.kind === "claim" ? `${action.asset ?? "RF"} claim` : withdraw ? `${action.asset} withdrawal` : action.kind}`}</Button>
+      }}>{busy ? copy.confirming : `confirm ${action.kind}`}</Button>
     </div>
     <p className="app-fp-note">{copy.confirmationNote}</p>
   </div>;

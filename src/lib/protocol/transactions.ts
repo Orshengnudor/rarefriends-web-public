@@ -1,4 +1,4 @@
-import { decodeFunctionResult, encodeFunctionData, getAddress, isAddress, parseAbi, parseUnits, toHex, zeroAddress, type Address } from "viem";
+import { decodeFunctionResult, encodeFunctionData, getAddress, isAddress, maxUint256, parseAbi, parseUnits, toHex, zeroAddress, type Address } from "viem";
 import type { ActionQuote, SwapQuote } from "@/src/features/protocol/model";
 import type { PreparedPlan, PrepareRequest } from "@/src/features/protocol/types";
 import { contractRead, ProtocolError, type ChainContext } from "@/src/lib/protocol/chain-context";
@@ -53,7 +53,7 @@ function transaction(context: ChainContext, sender: Address, contract: string, l
 
 async function approval(context: ChainContext, sender: Address, token: "RF" | "WETH", spender: Address, amount: bigint, block: bigint): Promise<Step[]> {
   const current = await contractRead<bigint>(context, token, "allowance", [sender, spender], block);
-  return current >= amount ? [] : [transaction(context, sender, token, `Approve ${tokenSymbols[token]}`, "approve", [spender, amount])];
+  return current >= amount ? [] : [transaction(context, sender, token, `Approve unlimited ${tokenSymbols[token]}`, "approve", [spender, maxUint256])];
 }
 
 async function ownedClaimFriends(context: ChainContext, sender: Address, block: bigint): Promise<IndexedNft[]> {

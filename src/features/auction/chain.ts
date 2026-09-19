@@ -1,6 +1,6 @@
 import {
   decodeErrorResult, decodeEventLog, encodeFunctionData, erc20Abi, formatUnits,
-  keccak256, parseAbi, parseUnits, toHex, zeroAddress, type Address, type Hex,
+  keccak256, maxUint256, parseAbi, parseUnits, toHex, zeroAddress, type Address, type Hex,
 } from "viem";
 import { launchAbi } from "./abi";
 import { walletRpcClient, walletRpcScope, type WalletRpc } from "../../wallet/wallet-rpc";
@@ -620,7 +620,7 @@ export async function submitLaunchBid(config: LaunchConfig, wallet: LaunchWallet
   if (state.validationHook !== zeroAddress) throw new Error("This auction requires bid eligibility data that has not been configured.");
   const hashes: Hex[] = [];
   if (state.currency !== zeroAddress && state.allowance < amount) {
-    hashes.push(await send(config, wallet, state.currency, encodeFunctionData({ abi: erc20Abi, functionName: "approve", args: [config.auctionAddress, amount] }), 0n, `${state.currencySymbol} approval`, progress));
+    hashes.push(await send(config, wallet, state.currency, encodeFunctionData({ abi: erc20Abi, functionName: "approve", args: [config.auctionAddress, maxUint256] }), 0n, `Unlimited ${state.currencySymbol} approval`, progress));
   }
   hashes.push(await send(config, wallet, config.auctionAddress,
     encodeFunctionData({ abi: launchAbi, functionName: "submitBid", args: [maxPrice, amount, wallet.address, state.previousTick, "0x"] }),

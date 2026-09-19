@@ -56,7 +56,11 @@ function weightAfter(account: ProtocolAccount, friend: PortfolioFriend, action: 
 }
 
 export function FriendPanel({ friend, account, onClose }: FriendPanelProps) {
+<<<<<<< HEAD
   const { busy, executeAction, snapshot, publicSnapshot, publicError, error: snapshotError } = useProtocol();
+=======
+  const { executeAction, busy, snapshot, publicSnapshot, publicError, error: snapshotError } = useProtocol();
+>>>>>>> upstream/main
   const usd = useUsdFormat();
   const [chosenKind, setChosenKind] = useState<"activate" | "upgrade" | "promote" | null>(null);
   const [review, setReview] = useState<PortfolioAction | null>(null);
@@ -128,7 +132,11 @@ export function FriendPanel({ friend, account, onClose }: FriendPanelProps) {
     <h3 id={`${panelId}-rewards`}>{copy.friend.rewards}</h3>
     <div className="app-fp-reward-list">{(["RF", "WETH"] as const).map(asset => {
       const amount = asset === "RF" ? friend.earnings : friend.earningsWeth ?? 0;
+<<<<<<< HEAD
       return <div className="app-fp-reward-row" key={asset}><strong>{number(amount, asset === "RF" ? 3 : 6)} <span>{asset}</span></strong><Button size="sm" preserveCase disabled={busy || !wallet || amount <= 0} onClick={async () => { if (await executeAction({ kind: "claim", friendId: friend.id, collection: friend.collection, asset })) setNotice(copy.friend.confirmed); }}>claim {asset}</Button></div>;
+=======
+      return <div className="app-fp-reward-row" key={asset}><strong>{number(amount, asset === "RF" ? 3 : 6)} <span>{asset}</span></strong><Button size="sm" preserveCase disabled={busy || !wallet || amount <= 0} onClick={() => void executeAction({ kind: "claim", friendId: friend.id, collection: friend.collection, asset })}>claim {asset}</Button></div>;
+>>>>>>> upstream/main
     })}</div>
   </section>;
 
@@ -138,12 +146,18 @@ export function FriendPanel({ friend, account, onClose }: FriendPanelProps) {
       {!fullyGrown && <>
       {canPromote && <div className="app-fp-action-options" aria-label="Choose how to increase reward weight"><button type="button" aria-pressed={nextKind === (earning ? "upgrade" : "activate")} disabled={busy || earning && friend.tier >= 4} onClick={() => choose(earning ? "upgrade" : "activate")}>{earning ? friend.tier >= 4 ? copy.fullyUpgraded : copy.friend.upgrade : "activate"}</button><button type="button" aria-pressed={nextKind === "promote"} disabled={busy} onClick={() => choose("promote")}>{copy.friend.promote}</button></div>}
 
-      {review && review.kind !== "convert" && review.kind !== "claim" && review.kind !== "withdraw" ? reviewBlock : <>
+      {review && review.kind !== "convert" ? reviewBlock : <>
         <div className="app-fp-action-title"><strong>{quote.title}</strong><Icon name={nextKind === "hardwire" ? "lock" : "trending-up"} size={24} /></div>
         {after !== null && <div className="app-fp-weight-change"><div><span>{copy.friend.currentWeight}</span><strong>{number(before, 6)}</strong></div><Icon name="arrow-right" size={24} /><div><span>after {nextKind}</span><strong>{number(after, 6)}</strong></div></div>}
         {nextKind === "promote" && <p className="app-fp-important">{copy.friend.promotionNote}</p>}
         <div className="app-fp-cost"><span>{copy.friend.tokenCost}</span><strong>{number(quote.cost, 4)}<small>{RF_SYMBOL}</small></strong></div>
-        <Button block variant="primary" disabled={busy || !quote.enabled} onClick={() => startReview(action)}>{quote.title}</Button>
+        <Button block variant="primary" disabled={busy || !quote.enabled} onClick={() => {
+          if (action.kind === "hardwire" || action.kind === "promote" || action.kind === "activate") {
+            setReview(null);
+            setNotice("");
+            void executeAction(action);
+          } else startReview(action);
+        }}>{quote.title}</Button>
         {extraNeeded > 0 ? <div className="app-fp-shortfall"><p>shortfall: {number(extraNeeded, 4)} {RF_SYMBOL}</p><Button href={snapshot && !snapshot.protocol.marketReady ? "/launch" : "/"} size="sm" block>{copy.buyTokens}</Button></div>
           : !quote.enabled && quote.reason ? <p className="app-fp-note">{quote.reason}</p> : null}
         <details className="app-fp-action-explanation"><summary>{copy.friend.details}</summary><p>{quote.description}</p></details>
@@ -151,30 +165,27 @@ export function FriendPanel({ friend, account, onClose }: FriendPanelProps) {
       </>}
     </section>;
 
-  const walletSection = <section className="app-fp-wallet" aria-labelledby={`${panelId}-wallet`}>
-      <div className="app-fp-section-heading"><h3 id={`${panelId}-wallet`}>{copy.friend.wallet}</h3><Icon name="wallet" size={16} /></div>
+  const walletSection = <section className="app-fp-wallet" aria-label={copy.friend.address}>
       {wallet ? <>
-        <div className="app-fp-wallet-value"><span className="app-fp-label">{copy.friend.balance}</span><strong>{usd(wallet.totalUsd)}</strong></div>
-        <div className="app-fp-address-label"><span className="app-fp-label">{copy.friend.address}</span><button type="button" onClick={copyAddress} aria-label="Copy friend wallet address"><Icon name="copy" size={12} />{copy.friend.copy}</button></div>
+        <div className="app-fp-address-label"><h3 className="app-fp-label">{copy.friend.address}</h3><button type="button" onClick={copyAddress} aria-label="Copy friend wallet address"><Icon name="copy" size={12} />{copy.friend.copy}</button></div>
         <input ref={addressRef} className="app-fp-address" type="text" readOnly value={wallet.address} aria-label="Friend wallet address" onClick={(event) => event.currentTarget.select()} spellCheck={false} />
         {copyStatus && <p className="app-fp-copy-status" role="status">{copyStatus}</p>}
+        <div className="app-fp-wallet-value"><span className="app-fp-label">{copy.friend.balance}</span><strong>{usd(wallet.totalUsd)}</strong></div>
 
-        <div className="app-fp-wallet-tabs" role="tablist" aria-label="Friend wallet holdings"><button type="button" role="tab" id={`${panelId}-tokens-tab`} aria-controls={`${panelId}-holdings`} aria-selected={walletTab === "tokens"} disabled={busy} onClick={() => setWalletTab("tokens")}>tokens <span>{wallet.tokens.length}</span></button><button type="button" role="tab" id={`${panelId}-nfts-tab`} aria-controls={`${panelId}-holdings`} aria-selected={walletTab === "NFTs"} disabled={busy} onClick={() => { setWalletTab("NFTs"); if (review?.kind === "withdraw") setReview(null); }}>NFTs <span>{wallet.nfts.length}</span></button></div>
+        <div className="app-fp-wallet-tabs" role="tablist" aria-label="Friend wallet holdings"><button type="button" role="tab" id={`${panelId}-tokens-tab`} aria-controls={`${panelId}-holdings`} aria-selected={walletTab === "tokens"} disabled={busy} onClick={() => setWalletTab("tokens")}>tokens <span>{wallet.tokens.length}</span></button><button type="button" role="tab" id={`${panelId}-nfts-tab`} aria-controls={`${panelId}-holdings`} aria-selected={walletTab === "NFTs"} disabled={busy} onClick={() => setWalletTab("NFTs")}>NFTs <span>{wallet.nfts.length}</span></button></div>
         <div id={`${panelId}-holdings`} role="tabpanel" aria-labelledby={`${panelId}-${walletTab === "tokens" ? "tokens" : "nfts"}-tab`}>
           {walletTab === "tokens" ? wallet.tokens.length ? <div className="app-fp-token-list">{wallet.tokens.map(token => {
             const asset = walletAsset(token.symbol);
             return <div className="app-fp-token-item" key={token.symbol}>
               <div className="app-fp-token"><span className="app-fp-token-icon" data-rf={walletAsset(token.symbol) === "RF"}>{walletAsset(token.symbol) === "RF" ? <TokenArt /> : <Icon name={token.symbol === "WETH" || token.symbol === "ETH" ? "coin" : "chart-bar"} size={24} />}</span><div><strong>{token.name}</strong><span>{token.symbol}</span></div><div className="app-fp-token-balance"><strong>{number(token.balance, token.symbol === "WETH" || token.symbol === "ETH" ? 5 : 3)}</strong><span>{usd(token.usd, token.symbol === "ETH" || token.symbol === "WETH" ? "ETH" : "RF")}</span></div>
-                {asset && <Button size="sm" preserveCase className="app-fp-withdraw" disabled={busy || token.balance <= 0} onClick={() => startReview({ kind: "withdraw", friendId: friend.id, collection: friend.collection, asset })}>withdraw {asset}</Button>}
+                {asset && <Button size="sm" preserveCase className="app-fp-withdraw" disabled={busy || token.balance <= 0} onClick={() => void executeAction({ kind: "withdraw", friendId: friend.id, collection: friend.collection, asset })}>withdraw {asset}</Button>}
               </div>
-              {review?.kind === "withdraw" && review.asset === asset && reviewBlock}
             </div>;
           })}</div> : <p className="app-fp-holdings-empty">{copy.friend.noTokens}</p>
             : wallet.nfts.length ? <div className="app-fp-wallet-nfts">{wallet.nfts.map((nft) => <button type="button" className="app-fp-wallet-nft" key={`${nft.collection}-${nft.id}`} aria-expanded={selectedNft === `${nft.collection}-${nft.id}`} onClick={() => setSelectedNft(selectedNft === `${nft.collection}-${nft.id}` ? null : `${nft.collection}-${nft.id}`)}><span className="app-fp-held-art" data-collection={nft.collection}><FriendPortrait friend={nft} size={48} /></span><span><strong>{nft.name}</strong><span>{nft.collection} #{nft.id}</span></span><Icon name={selectedNft === `${nft.collection}-${nft.id}` ? "chevron-up" : "chevron-down"} size={12} /></button>)}
               {heldNft && <div className="app-fp-held-detail"><FriendPortrait friend={heldNft} size={80} /><div><strong>{heldNft.name}</strong><p>{heldNft.collection} #{heldNft.id}</p></div></div>}
             </div> : <p className="app-fp-holdings-empty">{copy.friend.noNfts}</p>}
         </div>
-        <p className="app-fp-wallet-note">{friendRewards ? copy.friend.friendRewards : copy.friend.holderRewards}</p>
       </> : <div className="app-fp-no-wallet"><Icon name="lock" size={24} /><p>{copy.friend.notHardwired}</p><span>{copy.friend.walletRequirement}</span></div>}
     </section>;
 
@@ -197,10 +208,10 @@ export function FriendPanel({ friend, account, onClose }: FriendPanelProps) {
 
     {!(earning && fixedGenesis) && spendSection}
 
-    {friend.collection === "Genesis" && <details className="app-fp-convert"><summary>{copy.friend.convert} <Icon name="chevron-down" size={12} /></summary><div><dl className="app-fp-convert-values"><div><dt>receive</dt><dd>{number(converted.receive)} {RF_SYMBOL}</dd></div><div><dt>upfront fee</dt><dd>{number(converted.cost)} {RF_SYMBOL}</dd></div></dl><p className="app-fp-important">{copy.friend.conversionNotice} · {friendRewards ? copy.friend.accruedFriendRewards : copy.friend.accruedHolderRewards}</p>
-      {review?.kind === "convert" ? reviewBlock : <><Button block size="sm" disabled={busy || !converted.enabled} onClick={() => startReview({ kind: "convert", friendId: friend.id, collection: friend.collection })}>{copy.friend.reviewConversion}</Button>{!converted.enabled && <p className="app-fp-note">{converted.reason}</p>}</>}
-    </div></details>}
-
     {walletSection}
+
+    {friend.collection === "Genesis" && <section className="app-fp-convert" aria-labelledby={`${panelId}-convert`}><h3 id={`${panelId}-convert`}>{copy.friend.convert}</h3><div><dl className="app-fp-convert-values"><div><dt>receive</dt><dd>{number(converted.receive)} {RF_SYMBOL}</dd></div><div><dt>upfront fee</dt><dd>{number(converted.cost)} {RF_SYMBOL}</dd></div></dl>
+      {review?.kind === "convert" ? reviewBlock : <><Button block size="sm" disabled={busy || !converted.enabled} onClick={() => startReview({ kind: "convert", friendId: friend.id, collection: friend.collection })}>{copy.friend.reviewConversion}</Button>{!converted.enabled && <p className="app-fp-note">{converted.reason}</p>}</>}
+    </div></section>}
   </section>;
 }

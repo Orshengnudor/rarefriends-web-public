@@ -1,6 +1,6 @@
 /**
- * Protocol account types and display projections. Amounts use UI units here;
- * transaction preparation validates exact bigint amounts against the contracts.
+ * Protocol account types and display projections. Display amounts use UI units;
+ * wallet tokens also retain exact balances for withdrawal calldata.
  */
 export const RF_SYMBOL = "$RAREFRIENDS";
 export type RewardAsset = "RF" | "WETH";
@@ -37,7 +37,7 @@ export interface PortfolioFriend {
 /** ERC-6551 contents, including rewards already claimed into this wallet. */
 export interface FriendWallet {
   address: string;
-  tokens: { symbol: string; name: string; balance: number; usd: number }[];
+  tokens: { symbol: string; name: string; balance: number; rawBalance?: string; usd: number }[];
   nfts: { collection: string; name: string; id: number; portrait: number; imageUrl?: string }[];
   totalUsd: number;
 }

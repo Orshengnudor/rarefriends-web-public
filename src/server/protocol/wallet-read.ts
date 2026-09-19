@@ -6,73 +6,17 @@ import { chainPrices, readIndexedProtocolState } from "./state";
 import { readEthUsdPrice } from "./prices";
 import { readReserveStatus } from "../../lib/protocol/reserve";
 import { rewardApyPercent } from "../../lib/protocol/metrics";
+import { readProtocolTotals } from "./snapshot";
 
 const WEEK = 604_800;
 const MAX_OWNED = 1_500;
 const MAX_ACTIVATION_LOGS = 50_000;
-const REORG_OVERLAP_BLOCKS = 200n;
-type ActivationIndex = {
-  toBlock: bigint; paid: bigint;
-  positions: Map<string, { collection: "Genesis" | "Generations"; weight: bigint }>;
-  applied: Map<string, bigint>; pending?: Promise<void>;
-};
-export type ActivationSummary = { paid: bigint; friendsPlaying: number; activatedGenesis: number; genesisWeight: bigint; generationsWeight: bigint };
-const activationIndexes = new Map<string, ActivationIndex>();
-
 function activationEvents(context: ChainContext) {
   const manager = context.manifest.contracts.ActivationManager;
   const find = (name: string) => manager.abi.find((item): item is AbiEvent => item.type === "event" && item.name === name);
-  const activated = find("Activated"), cleared = find("ActivationCleared");
-  if (!activated || !cleared) throw new ProtocolError("The activation events are not deployed.", 503);
-  return { manager, activated, cleared };
-}
-
-/**
- * Activation state from the ActivationManager's own events, kept in this instance's memory: RF everyone has paid
- * to activate, and which friends currently hold an active position. The first read is one log query over the whole
- * deployment; later reads fetch only the blocks since, re-reading a short overlap so a small reorg cannot leave a
- * duplicate or a phantom position. Nothing here pages through the historical event index.
- */
-export async function readActivationSummary(context: ChainContext, toBlock: bigint): Promise<ActivationSummary> {
-  const { manager, activated, cleared } = activationEvents(context);
-  const genesis = context.manifest.contracts.Genesis.address.toLowerCase();
-  const key = `${context.rpcUrl}:${context.chainId}:${manager.address.toLowerCase()}`;
-  const index: ActivationIndex = activationIndexes.get(key) ?? { toBlock: context.fromBlock - 1n, paid: 0n, positions: new Map(), applied: new Map() };
-  activationIndexes.set(key, index);
-  if (index.pending) await index.pending;
-  if (index.toBlock < toBlock) {
-    const fromBlock = index.toBlock >= context.fromBlock ? (index.toBlock + 1n > REORG_OVERLAP_BLOCKS ? index.toBlock + 1n - REORG_OVERLAP_BLOCKS : context.fromBlock) : context.fromBlock;
-    index.pending = (async () => {
-      const logs = await context.client.getLogs({ address: manager.address, events: [activated, cleared], fromBlock: fromBlock < context.fromBlock ? context.fromBlock : fromBlock, toBlock });
-      if (logs.length > MAX_ACTIVATION_LOGS) throw new ProtocolError("Activation history exceeds its supported bound.", 503);
-      const ordered = [...logs].sort((left, right) => left.blockNumber === right.blockNumber ? Number(left.logIndex) - Number(right.logIndex) : left.blockNumber < right.blockNumber ? -1 : 1);
-      for (const log of ordered) {
-        if (log.blockNumber === null || log.logIndex === null) throw new ProtocolError("Pending activation events cannot be indexed.", 503);
-        const eventKey = `${log.blockNumber}:${log.logIndex}`;
-        if (index.applied.has(eventKey)) continue;
-        const args = log.args as { collection?: unknown; tokenId?: unknown; weight?: unknown; payment?: unknown };
-        const collection = typeof args.collection === "string" ? args.collection.toLowerCase() : "";
-        if (typeof args.tokenId !== "bigint") throw new ProtocolError("Invalid activation event.", 503);
-        const token = `${collection}:${args.tokenId}`;
-        if (log.eventName === "Activated") {
-          if (typeof args.payment !== "bigint" || args.payment < 0n || typeof args.weight !== "bigint" || args.weight < 0n) throw new ProtocolError("Invalid activation payment.", 503);
-          index.paid += args.payment;
-          index.positions.set(token, { collection: collection === genesis ? "Genesis" : "Generations", weight: args.weight });
-        } else index.positions.delete(token);
-        index.applied.set(eventKey, log.blockNumber);
-      }
-      // Only keys inside the next overlap window matter for deduplication.
-      const floor = toBlock > REORG_OVERLAP_BLOCKS ? toBlock - REORG_OVERLAP_BLOCKS : 0n;
-      for (const [eventKey, block] of index.applied) if (block < floor) index.applied.delete(eventKey);
-      index.toBlock = toBlock;
-    })();
-    try { await index.pending; } finally { index.pending = undefined; }
-  }
-  let activatedGenesis = 0, genesisWeight = 0n, generationsWeight = 0n;
-  for (const position of index.positions.values()) {
-    if (position.collection === "Genesis") { activatedGenesis++; genesisWeight += position.weight; } else generationsWeight += position.weight;
-  }
-  return { paid: index.paid, friendsPlaying: index.positions.size, activatedGenesis, genesisWeight, generationsWeight };
+  const activated = find("Activated");
+  if (!activated) throw new ProtocolError("The activation events are not deployed.", 503);
+  return { manager, activated };
 }
 
 const MAX_PAGES = 20;
@@ -117,8 +61,7 @@ export async function readOwnedNfts(context: ChainContext, owner: Address, fetch
 
 /**
  * One wallet's holdings from the server RPC with no protocol event history: NFT ownership comes from
- * Alchemy's NFT API and every figure is a live contract read at one block. History-derived numbers the
- * pages do not show (activity, claimed totals, protocol volume, activation counts) are empty or zero.
+ * Alchemy's NFT API. Wallet figures use live contract reads; protocol totals come from the snapshot service.
  */
 export async function readWalletPortfolioState(address: Address, context: ChainContext, usdReader = readEthUsdPrice): Promise<ProtocolState> {
   const [owned, base] = await Promise.all([readOwnedNfts(context, address), readProtocolSnapshot(context, usdReader)]);
@@ -148,15 +91,14 @@ export async function readHolderActivationPaid(context: ChainContext, holder: Ad
  * Wallet-specific reads may still use the holder-filtered activation query below.
  */
 export async function readProtocolSnapshot(context: ChainContext, usdReader = readEthUsdPrice): Promise<ProtocolState> {
-  const snapshot = context.manifest.protocolSnapshot;
-  if (!snapshot || snapshot.v !== 1) throw new ProtocolError("The deployment protocol snapshot is missing. Re-export the deployment after running the one-time snapshot step.", 503);
-  let activationPaid: bigint, ammVolume: bigint, claimedRf: bigint, claimedWeth: bigint;
-  try {
-    activationPaid = BigInt(snapshot.activationPaid); ammVolume = BigInt(snapshot.ammVolume);
-    claimedRf = BigInt(snapshot.claimedRf); claimedWeth = BigInt(snapshot.claimedWeth);
-  } catch { throw new ProtocolError("The deployment protocol snapshot is invalid.", 503); }
-  const block = await context.client.getBlock();
+  const [publication, block] = await Promise.all([readProtocolTotals(context), context.client.getBlock()]);
+  const snapshot = publication.protocolSnapshot;
   if (block.number === null || block.hash === null) throw new ProtocolError("The latest block is unavailable.", 503);
+  if (BigInt(snapshot.blockNumber) > block.number || (BigInt(snapshot.blockNumber) === block.number && snapshot.blockHash.toLowerCase() !== block.hash.toLowerCase())) {
+    throw new ProtocolError("Protocol data is catching up. Refresh to try again.", 503);
+  }
+  const activationPaid = BigInt(snapshot.activationPaid), ammVolume = BigInt(snapshot.ammVolume);
+  const claimedRf = BigInt(snapshot.claimedRf), claimedWeth = BigInt(snapshot.claimedWeth);
   const at = Number(block.timestamp);
   const { RF, WETH } = context.manifest.contracts;
   const [prices, initialSupply, currentSupply, inventory, totalWeight, rfStream, wethStream, reserve] = await Promise.all([
@@ -200,7 +142,7 @@ export async function readProtocolSnapshot(context: ChainContext, usdReader = re
       },
     prices: { ethUsd: prices.ethUsd, rfUsd: prices.rfUsd, label: prices.label, usdAvailable: prices.usdAvailable,
       usdSource: prices.usdSource, usdUpdatedAt: prices.usdUpdatedAt, usdStale: prices.usdStale },
-    coverage: { fromBlock: String(block.number), toBlock: String(block.number), rewards: "since-deployment", portfolio: "current-snapshot", nfts: "known-collections" },
+    coverage: { metricsBlockNumber: snapshot.blockNumber, metricsTimestamp: publication.blockTimestamp * 1000, fromBlock: String(block.number), toBlock: String(block.number), rewards: "since-deployment", portfolio: "current-snapshot", nfts: "known-collections" },
   };
   return { account: null, protocol, blockNumber: String(block.number), timestamp: at * 1000 };
 }
