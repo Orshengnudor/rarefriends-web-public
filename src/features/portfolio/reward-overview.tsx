@@ -1,24 +1,39 @@
 "use client";
 
+import { useState } from "react";
 import { portfolioContent as copy } from "@/src/content/portfolio";
 import { useUsdFormat } from "../protocol/use-usd-format";
 import { formatAmount, getRewardOutlook, holderApyPercent } from "./analytics-data";
 import { useProtocol } from "../protocol/protocol-provider";
-import { friendWeight, type ProtocolAccount } from "../protocol/model";
+import { friendWeight, claimTargets, type ProtocolAccount } from "../protocol/model";
 
 export function PortfolioSummary({ account, earningFilter, onFilter }: {
   account: ProtocolAccount | null;
   earningFilter: "all" | "not-earning" | "earning";
   onFilter: (value: "all" | "not-earning" | "earning") => void;
 }) {
-  const { snapshot, loading } = useProtocol();
+  const { snapshot, loading, executeAction, busy } = useProtocol();
   const usd = useUsdFormat();
+  const [claimingAll, setClaimingAll] = useState(false);
   const protocol = snapshot?.protocol;
   const outlook = account && protocol ? getRewardOutlook(account, protocol) : null;
   const apy = account && protocol ? holderApyPercent(account, protocol) : null;
   const friends = account?.friends ?? [];
   const earningCount = friends.filter(friend => friendWeight(friend) > 0).length;
   const emptyRewards = loading ? copy.summary.loading : account ? copy.summary.unavailable : copy.disconnected;
+  const targets = account ? claimTargets(account) : [];
+
+  async function claimAll() {
+    if (claimingAll || busy || !targets.length) return;
+    setClaimingAll(true);
+    try {
+      // Independent claims: one failing (e.g. a stale quote on that friend)
+      // must not stop the rest from going through.
+      for (const target of targets) await executeAction(target);
+    } finally {
+      setClaimingAll(false);
+    }
+  }
 
   return <section className="app-pf-summary" aria-label="Portfolio summary">
     <div className="app-pf-earning-summary">
@@ -28,6 +43,7 @@ export function PortfolioSummary({ account, earningFilter, onFilter }: {
         <span>{copy.summary.claimable}</span>
         <strong>{outlook ? usd(outlook.claimableUsd) : "—"}</strong>
         <small>{outlook ? outlook.assets.map(asset => `${formatAmount(asset.claimable, asset.asset === "WETH" ? 5 : 2)} ${asset.asset}`).join(" + ") : emptyRewards}</small>
+        {targets.length > 0 && <button type="button" className="app-pf-claim-all" disabled={claimingAll || busy} onClick={claimAll}>{claimingAll ? copy.summary.claimingAll : copy.summary.claimAll}</button>}
       </div>
       <div className="app-pf-summary-reward">
         <span>{copy.summary.pending}</span>
