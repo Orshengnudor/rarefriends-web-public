@@ -1,6 +1,6 @@
 import { decodeErrorResult, decodeEventLog, encodeFunctionData, erc20Abi, parseAbi, toHex, type Abi, type Address, type Hex } from "viem";
 import type { PortfolioAction } from "./model";
-import type { ProtocolConfig, PreparedPlan } from "./types";
+import type { ProtocolConfig, PreparedPlan, ProtocolState } from "./types";
 import { walletChainContext } from "../../wallet/wallet-chain";
 import { walletRpcClient, type WalletRpc } from "../../wallet/wallet-rpc";
 
@@ -25,6 +25,35 @@ export async function prepareTransaction(input: PrepareInput, config: ProtocolCo
   const plan = await prepareProtocol(prepareInput(normalized), context);
   signal?.throwIfAborted();
   return plan;
+}
+
+/** Encode claims and withdrawals from the displayed snapshot without any RPC reads. */
+export function portfolioTransferPlan(address: Address, action: PortfolioAction, config: ProtocolConfig, snapshot: ProtocolState): PreparedPlan {
+  const account = snapshot.account;
+  const friend = account?.friends.find(friend => friend.id === action.friendId && friend.collection === action.collection);
+  if (!account || account.address?.toLowerCase() !== address.toLowerCase() || !friend?.wallet || !friend.hardwired) throw new Error("Refresh your portfolio to load this friend's wallet.");
+  const asset = action.asset ?? "RF";
+  const title = `${action.kind === "claim" ? "Claim" : "Withdraw"} ${asset} · ${friend.collection} #${friend.id}`;
+  let to: Address;
+  let data: Hex;
+  let receive = "0";
+  if (action.kind === "claim") {
+    if (asset === "ETH" || account.rewardAccounting !== "friend") throw new Error("This friend does not support these rewards.");
+    to = config.contracts.ActivationManager;
+    data = encodeFunctionData({ abi: parseAbi(["function claim(address asset, address collection, uint256 tokenId)"]), functionName: "claim",
+      args: [config.contracts[asset], config.contracts[friend.collection], BigInt(friend.id)] });
+  } else if (action.kind === "withdraw") {
+    const token = friend.wallet.tokens.find(token => token.symbol === asset || asset === "RF" && token.symbol === "$RAREFRIENDS");
+    if (!token?.rawBalance || BigInt(token.rawBalance) <= 0n) throw new Error("Refresh your portfolio to load the withdrawal balance.");
+    receive = token.rawBalance;
+    to = friend.wallet.address as Address;
+    const transfer = asset === "ETH" ? "0x" : encodeFunctionData({ abi: erc20Abi, functionName: "transfer", args: [address, BigInt(receive)] });
+    data = encodeFunctionData({ abi: parseAbi(["function execute(address to, uint256 value, bytes data, uint8 operation) payable returns (bytes)"]), functionName: "execute",
+      args: [asset === "ETH" ? address : config.contracts[asset], asset === "ETH" ? BigInt(receive) : 0n, transfer, 0] });
+  } else throw new Error("Unsupported portfolio transfer.");
+  return { address, chainId: config.chainId, blockNumber: snapshot.blockNumber, request: { address, action }, exact: { cost: "0", receive },
+    quote: { title, description: title, asset, cost: 0, receive: 0, enabled: true },
+    steps: [{ label: title, transaction: { from: address, to, data, value: "0x0", chainId: toHex(config.chainId) } }] };
 }
 
 export function transactionError(cause: unknown): string {
@@ -70,8 +99,10 @@ export async function submitPlan({ wallet, config, input, plan, onProgress, onRe
   if (plan.chainId !== config.chainId || plan.address.toLowerCase() !== input.address.toLowerCase()) throw new Error("The transaction belongs to a different wallet or network. Review again.");
   if (!plan.quote.enabled) throw new Error(plan.quote.reason ?? "This action is unavailable.");
   const targetChain = toHex(config.chainId);
-  const actualChain = await wallet.request("eth_chainId");
+  const immediate = input.action?.kind === "claim" || input.action?.kind === "withdraw";
+  const actualChain = immediate ? wallet.chainId : await wallet.request("eth_chainId");
   if (typeof actualChain !== "string" || BigInt(actualChain) !== BigInt(config.chainId)) {
+    if (immediate) throw new Error(`Switch to ${config.chainName} in your wallet.`);
     onProgress({ title: plan.quote.title, label: `Switch to ${config.chainName} in your wallet`, step: 0, total: plan.steps.length });
     try { await wallet.request("wallet_switchEthereumChain", [{ chainId: targetChain }]); }
     catch (cause) {
@@ -89,6 +120,10 @@ export async function submitPlan({ wallet, config, input, plan, onProgress, onRe
   const owner = input.address.toLowerCase();
   async function checkWallet() {
     if (wallet.getSession() !== session) throw new Error("Wallet changed. Review the transaction again.");
+    if (immediate) {
+      if (wallet.address?.toLowerCase() !== owner || !wallet.chainId || BigInt(wallet.chainId) !== BigInt(config.chainId)) throw new Error("Wallet or network changed.");
+      return;
+    }
     const [accounts, chain] = await Promise.all([wallet.request("eth_accounts"), wallet.request("eth_chainId")]);
     if (!Array.isArray(accounts) || String(accounts[0]).toLowerCase() !== owner || typeof chain !== "string" || BigInt(chain) !== BigInt(config.chainId) || wallet.getSession() !== session) {
       throw new Error("Wallet or network changed. Review the transaction again.");
@@ -126,6 +161,7 @@ export async function submitPlan({ wallet, config, input, plan, onProgress, onRe
   let earlierHash: string | null = pendingTransactions.get(pendingKey) ?? null;
   try { earlierHash = localStorage.getItem(pendingKey) ?? earlierHash; } catch {}
   if (earlierHash && /^0x[0-9a-fA-F]{64}$/.test(earlierHash)) {
+    if (immediate) throw new Error("A previous transaction is still pending. Wait for it to settle before retrying.");
     onProgress({ title: plan.quote.title, label: "Checking your previously submitted transaction", step: 0, total: plan.steps.length, hash: earlierHash });
     const receipt = await waitForConfirmation(earlierHash as Hex, "Previous transaction", 0, plan.steps.length);
     await onReceipt(receipt.blockNumber);
@@ -139,21 +175,16 @@ export async function submitPlan({ wallet, config, input, plan, onProgress, onRe
     await checkWallet();
     // Re-check the action's current generation/tier and token cost before its final call.
     // The reviewed calldata and its onchain limits remain the user's approved terms.
-    if (input.action && input.action.kind !== "convert" && index === plan.steps.length - 1) {
+    if (!immediate && input.action && input.action.kind !== "convert" && index === plan.steps.length - 1) {
       const current = await prepareTransaction(input, config, wallet);
       if (!current.quote.enabled || current.exact.cost !== plan.exact.cost || current.quote.title !== plan.quote.title) {
         throw new Error("This friend's action or cost has changed. Review its updated quote to continue.");
-      }
-      if (input.action.kind === "withdraw" && (current.exact.receive !== plan.exact.receive
-        || current.steps.at(-1)?.transaction.to.toLowerCase() !== step.transaction.to.toLowerCase()
-        || current.steps.at(-1)?.transaction.data !== step.transaction.data)) {
-        throw new Error("The NFT wallet balance has changed. Review the updated withdrawal.");
       }
     }
     const transaction = step.transaction;
     if (transaction.from.toLowerCase() !== owner) throw new Error("Transaction wallet does not match the connected account.");
     onProgress({ title: plan.quote.title, label: `${step.label} · confirm in wallet`, step: index + 1, total });
-    const gas = await client.estimateGas({ account: transaction.from as Address, to: transaction.to as Address,
+    const gas = immediate ? undefined : await client.estimateGas({ account: transaction.from as Address, to: transaction.to as Address,
       data: transaction.data as Hex, value: BigInt(transaction.value ?? "0x0") });
     if (input.action?.kind === "convert") {
       // Re-read live Reserve gates before EVERY signature, including RF/NFT approvals.
@@ -171,12 +202,12 @@ export async function submitPlan({ wallet, config, input, plan, onProgress, onRe
       }
     }
     await checkWallet();
-    const hash = await wallet.request("eth_sendTransaction", [{ ...transaction, chainId: targetChain, gas: toHex(gas * 120n / 100n) }]);
+    const hash = await wallet.request("eth_sendTransaction", [{ ...transaction, chainId: targetChain, ...(gas === undefined ? {} : { gas: toHex(gas * 120n / 100n) }) }]);
     if (typeof hash !== "string" || !/^0x[0-9a-fA-F]{64}$/.test(hash)) throw new Error("Your wallet did not return a transaction hash.");
     rememberHash(hash);
     onProgress({ title: plan.quote.title, label: `${step.label} · waiting for confirmation`, step: index + 1, total, hash });
     const receipt = await waitForConfirmation(hash as Hex, step.label, index + 1, total);
-    if (receipt.status !== "success") throw new Error(revertMessage(step.label, await revertReason(transaction, receipt.blockNumber)));
+    if (receipt.status !== "success") throw new Error(revertMessage(step.label, immediate ? undefined : await revertReason(transaction, receipt.blockNumber)));
     if (input.swap && !input.swap.buy && weth) {
       for (const log of receipt.logs) {
         if (log.address.toLowerCase() !== weth.toLowerCase()) continue;
