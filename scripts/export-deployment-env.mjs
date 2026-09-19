@@ -48,7 +48,6 @@ const compact = {
   chainId: manifest.chainId,
   deploymentBlock: block(manifest.deploymentBlock ?? '0'),
   contracts,
-  ...(manifest.protocolSnapshot ? { protocolSnapshot: manifest.protocolSnapshot } : {}),
 };
 const serialized = JSON.stringify(compact);
 if (Buffer.byteLength(serialized) > 2_097_152) throw new Error('Runtime manifest exceeds the server decoded size limit of 2 MB.');

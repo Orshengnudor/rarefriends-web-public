@@ -8,7 +8,7 @@ import { formatAmount } from "../portfolio/analytics-data";
 export function ProtocolMetrics() {
   const { snapshot, publicSnapshot, publicLoading, publicError, loading } = useProtocol();
   const protocol = publicSnapshot?.protocol ?? snapshot?.protocol;
-  const blockNumber = publicSnapshot?.blockNumber ?? snapshot?.blockNumber;
+  const blockNumber = protocol?.coverage.metricsBlockNumber ?? publicSnapshot?.blockNumber ?? snapshot?.blockNumber;
   const metrics = protocol?.metrics;
   const usdAvailable = ((protocol?.prices.ethUsd ?? 0) > 0 && (protocol?.prices.rfUsd ?? 0) > 0);
   const money = (usd: number | undefined) => usd !== undefined && usdAvailable ? `$${formatAmount(usd, 0)}` : "—";
