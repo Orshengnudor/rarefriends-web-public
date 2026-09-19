@@ -25,6 +25,7 @@ See [.env.example](.env.example) for the complete example. Keep each setting in 
 | `PROTOCOL_DEPLOYMENT_JSON` | Alternative inline JSON manifest. Use only one inline format. |
 | `PROTOCOL_DEPLOYMENT_FILE` | Local manifest path when neither inline format is set; defaults to `.local/protocol/deployment.json`. |
 | `PROTOCOL_RPC_URL` | Server RPC endpoint. Production portfolio NFT discovery requires an Alchemy Robinhood endpoint. |
+| `PROTOCOL_SNAPSHOT_URL` | Public protocol metrics endpoint, fetched by the server. Defaults to the Rare Friends Cloudflare service shown in `.env.example`. |
 | `PROTOCOL_PUBLIC_RPC_URL` | Required for Anvil: a local/LAN wallet RPC URL reachable from the browser, such as `http://127.0.0.1:8545`. Leave empty for production, which uses the canonical public endpoint. |
 | `GOOGLE_ANALYTICS_ID` | Optional Google Analytics measurement ID (`G-…`). Analytics loads only when a valid ID is configured. |
 | `DEV_ALLOWED_ORIGINS` | Optional comma-separated hostnames/IPs allowed to load local development assets. |
@@ -37,7 +38,7 @@ The export tool accepts an existing deployment manifest and emits compressed pub
 npm run export:deployment -- --manifest /path/to/deployment.json --out /path/to/deployment.base64
 ```
 
-Set `PROTOCOL_DEPLOYMENT_GZIP_BASE64` to the output file's contents, and configure `PROTOCOL_RPC_URL` separately. Auction reads and bid preparation use the connected wallet; protocol metrics use the server routes. User transactions are signed in the wallet. Private environment files and `.local/` are ignored by Git; the web server does not need deployer keys or seed phrases.
+Set `PROTOCOL_DEPLOYMENT_GZIP_BASE64` to the output file's contents, and configure `PROTOCOL_RPC_URL` separately. Auction reads and bid preparation use the connected wallet; protocol metrics use the server routes. Production history totals come from the external metrics service and update every five minutes. Prices, reward streams and wallet balances still use current contract reads; APY keeps the same formula with the service's cumulative activation payments. Missing, invalid or more than 15-minute-old service data returns an availability error; the app does not fall back to old deployment totals or rescan global history. User transactions are signed in the wallet. Private environment files and `.local/` are ignored by Git; the web server does not need deployer keys or seed phrases.
 
 ## Build and check
 

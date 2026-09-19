@@ -1,11 +1,10 @@
-import type { Abi, Address, Hex, PublicClient } from "viem";
+import type { Abi, Address, PublicClient } from "viem";
 
 /** Transport-independent protocol inputs. No environment, filesystem or HTTP access. */
 export interface DeploymentContract { address: Address; abi: Abi; transactionHash?: string; deploymentBlock?: string }
 export interface Deployment {
   chainId: number; chainName?: string; explorerUrl?: string; rpcUrl?: string; deploymentBlock: string; local?: boolean;
   accounts?: unknown[]; contracts: Record<string, DeploymentContract>;
-  protocolSnapshot?: { v: 1; blockNumber: string; blockHash: Hex; activatedGenesis: number; friendsPlaying: number; genesisWeight: string; generationsWeight: string; activationPaid: string; ammVolume: string; claimedRf: string; claimedWeth: string };
   auction?: { deploymentBlock?: string; [key: string]: unknown };
   settings?: { auction?: { deploymentBlock?: string }; [key: string]: unknown };
 }
