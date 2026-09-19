@@ -10,7 +10,7 @@ import { Dialog } from "@/src/components/ui/dialog";
 import { usePublicWallet } from "@/src/wallet/wallet-provider";
 import { RF_SYMBOL, type ProtocolAccount, type PortfolioAction } from "./model";
 import type { ProtocolState, ProtocolConfig, PreparedPlan, PublicProtocolSnapshot } from "./types";
-import { prepareTransaction, submitPlan, transactionError, type TransactionProgress } from "./transaction-client";
+import { portfolioTransferPlan, prepareTransaction, submitPlan, transactionError, type TransactionProgress } from "./transaction-client";
 import { readWalletBalances, readServerProtocolState, type WalletBalances } from "../../wallet/wallet-chain";
 import { walletRpcScope } from "../../wallet/wallet-rpc";
 import { protocolDisplayQueryKeys, protocolReadPolicy, sessionDisplayCache } from "./query-policy";
@@ -119,7 +119,10 @@ export function ProtocolProvider({ children }: { children: ReactNode }) {
     try {
       if (!wallet.address || !config) throw new Error(copy.connect);
       const input = { address: wallet.address, action: value };
-      const plan = reviewedPlan ?? await prepareTransaction(input, config, wallet);
+      const immediate = value.kind === "claim" || value.kind === "withdraw";
+      if (immediate && !snapshot) throw new Error("Refresh your portfolio before continuing.");
+      const plan = immediate ? portfolioTransferPlan(wallet.address as Address, value, config, snapshot!)
+        : reviewedPlan ?? await prepareTransaction(input, config, wallet);
       await submitPlan({ wallet, config, input, plan, onProgress: setProgress,
         onReceipt: async () => { received = true;
           await invalidateDisplays(); } });

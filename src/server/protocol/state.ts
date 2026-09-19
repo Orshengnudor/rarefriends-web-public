@@ -47,9 +47,9 @@ async function readWallet(context: ChainContext, index: ChainIndex, nft: Indexed
     contractRead<bigint>(context, "WETH", "balanceOf", [address], index.block),
   ]);
   const tokens = [
-    { symbol: "ETH", name: "Ether", balance: units(eth), usd: units(eth) * prices.ethUsd },
-    { symbol: "WETH", name: "Wrapped Ether", balance: units(weth), usd: units(weth) * prices.ethUsd },
-    { symbol: "$RAREFRIENDS", name: "Rare Friends", balance: units(rf), usd: units(rf) * prices.rfUsd },
+    { symbol: "ETH", name: "Ether", balance: units(eth), rawBalance: String(eth), usd: units(eth) * prices.ethUsd },
+    { symbol: "WETH", name: "Wrapped Ether", balance: units(weth), rawBalance: String(weth), usd: units(weth) * prices.ethUsd },
+    { symbol: "$RAREFRIENDS", name: "Rare Friends", balance: units(rf), rawBalance: String(rf), usd: units(rf) * prices.rfUsd },
   ].filter((token) => token.balance > 0);
   const nested = [...index.nfts.values()].filter((item) => item.owner.toLowerCase() === address.toLowerCase());
   const nfts = await mapBounded(nested, async (item) => {
